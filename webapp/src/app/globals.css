@@ -1,0 +1,227 @@
+@import "tailwindcss";
+
+
+@theme {
+  /* Claude Matte Color Palette */
+  --color-bg-base: #262625;
+  /* Matched to surface for flat look */
+  /* Warm Charcoal */
+  --color-bg-surface: #262625;
+  /* Lighter Charcoal */
+  --color-bg-elevated: #30302e;
+  /* Card Background */
+
+  --color-accent-primary: #d97757;
+  /* Terracotta */
+  --color-accent-secondary: #c5a572;
+  /* Sand / Kraft */
+  --color-accent-tertiary: #586e5e;
+  /* Sage Green */
+
+  --color-text-primary: #f0f0ee;
+  /* Off-White */
+  --color-text-secondary: #a1a1aa;
+  /* Stone Gray */
+  --color-text-dim: #52525b;
+  /* Deep Gray */
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular;
+
+  --animate-fade-in: fade-in 0.5s ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* =========================================
+   BASE STYLES
+   ========================================= */
+body {
+  background-color: #1e1e1d;
+  /* Force Dark Mode Fallback */
+  background-color: var(--color-bg-base);
+  color: #f0f0ee;
+  color: var(--color-text-primary);
+  /* Subtle texture or just solid matte */
+}
+
+/* =========================================
+   MATTE UI UTILITIES
+   ========================================= */
+.glass-panel {
+  /* Mapping to Matte Panel for backward compatibility */
+  background-color: var(--color-bg-surface);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.glass-card {
+  /* Mapping to Matte Card */
+  background-color: var(--color-bg-elevated);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background-color: #3a3a38;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================
+   COMPONENT STYLES
+   ========================================= */
+
+/* Use for main dashboard containers */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Primary Button (Terracotta) */
+.btn-primary {
+  background-color: var(--color-accent-primary);
+  color: #fff;
+  font-weight: 500;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  /* More squared for Claude feel */
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary:hover {
+  background-color: #c06648;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Secondary / Matte Button */
+.btn-glass {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--color-text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.btn-glass:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+}
+
+/* Inputs */
+.input {
+  background-color: rgba(0, 0, 0, 0.2);
+  /* Deep inset */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: var(--color-text-primary);
+  transition: border-color 0.2s;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-accent-primary);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.input::placeholder {
+  color: var(--color-text-dim);
+}
+
+/* Text Gradients (Converted to Solid Accents for Claude Style) */
+.text-gold {
+  color: #C9A36B;
+}
+
+.text-gradient-orange {
+  color: var(--color-accent-primary);
+}
+
+.text-gradient-purple {
+  color: var(--color-accent-secondary);
+}
+
+.text-gradient-blue {
+  color: #60a5fa;
+  /* Soft Blue */
+}
+
+/* =========================================
+   SPECIAL EFFECTS
+   ========================================= */
+
+/* Floating Card Animation */
+.card-float {
+  background-color: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 1rem;
+  transition: all 0.3s;
+}
+
+.card-float:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #3f3f46;
+  border-radius: 4px;
+  border: 2px solid var(--color-bg-base);
+  /* Inset look */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #52525b;
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration) linear infinite;
+}

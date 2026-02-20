@@ -1,0 +1,13 @@
+# Root-level secrets
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store

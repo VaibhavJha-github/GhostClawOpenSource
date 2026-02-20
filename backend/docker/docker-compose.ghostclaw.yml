@@ -1,0 +1,61 @@
+# docker-compose.ghostclaw.yml
+# Run a GhostClaw agent locally for testing
+
+version: "3.8"
+
+services:
+  ghostclaw-agent:
+    build:
+      context: ../..
+      dockerfile: backend/docker/Dockerfile.ghostclaw
+    image: ghostclaw/agent:latest
+    container_name: ghostclaw-${AGENT_NAME:-atlas}
+    
+    environment:
+      HOME: /home/node
+      TERM: xterm-256color
+      
+      # Required - Gateway authentication
+      GATEWAY_TOKEN: ${GATEWAY_TOKEN:-please-change-this-token}
+      
+      # Agent identity
+      AGENT_NAME: ${AGENT_NAME:-Atlas}
+      AGENT_ID: ${AGENT_ID:-local-test}
+      
+      # Model configuration
+      PRIMARY_MODEL: ${PRIMARY_MODEL:-anthropic/claude-sonnet-4-20250514}
+      
+      # API Keys (user provides these)
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      
+      # Telegram (optional)
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_USER_ID: ${TELEGRAM_USER_ID:-}
+      
+      # Discord (optional)
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN:-}
+      
+      # Personality
+      PERSONALITY_DESCRIPTION: ${PERSONALITY_DESCRIPTION:-A helpful AI assistant}
+    
+    volumes:
+      # Persist agent data
+      - ./data/${AGENT_ID:-local}:/home/node/.openclaw
+    
+    ports:
+      - "${HOST_PORT:-18789}:18789"
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18789/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    
+    labels:
+      - "ghostclaw.agent_id=${AGENT_ID:-local}"
+      - "ghostclaw.user_id=${USER_ID:-test}"
+      - "ghostclaw.environment=development"
